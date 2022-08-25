@@ -15,6 +15,7 @@ class MyApp : Application() {
                 listOf(
                     networkModule,
                     viewModelModule,
+                    localDbModule
                 )
             )
         }

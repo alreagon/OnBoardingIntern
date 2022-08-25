@@ -1,6 +1,10 @@
-package com.example.onboardinginternapp.model
+package com.example.onboardinginternapp.data.remote.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
@@ -13,6 +17,7 @@ data class MovieResponse(
     val results: List<Movie>,
 )
 
+@Entity(tableName = "movies")
 @Parcelize
 data class Movie(
 
@@ -37,9 +42,34 @@ data class Movie(
     @field:SerializedName("vote_average")
     val voteAverage: Double,
 
+    @PrimaryKey
     @field:SerializedName("id")
     val id: Int,
 
     @field:SerializedName("vote_count")
     val voteCount: Int
 ) : Parcelable
+
+class MovieTypeConverter {
+    @TypeConverter
+    fun movieToString(moviee: Movie?) = Gson().toJson(moviee)
+
+    @TypeConverter
+    fun stringToMovie(string : String) : Movie = Gson().fromJson(string, Movie::class.java)
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

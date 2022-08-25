@@ -11,6 +11,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="abuabuabu">#A1A3A6</color>
+    <color name="ijonotip">#73CA5C</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:ignore="PrivateResource">#e50914
     </color>
     <!--    4fcca3, 4fcca3, 009a74, 85ffd4-->

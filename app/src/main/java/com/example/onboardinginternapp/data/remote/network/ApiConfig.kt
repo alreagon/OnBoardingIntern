@@ -1,4 +1,4 @@
-package com.example.onboardinginternapp.network
+package com.example.onboardinginternapp.data.remote.network
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -54,6 +54,11 @@
         <item name="cornerSizeBottomRight">20dp</item>
     </style>
 
+    <style name="TextTitle.SmallNoBold">
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/poppins</item>
+    </style>
+
     <style name="ButtonPrimary" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:textColor">@color/primary_2</item>
         <item name="fontFamily">@font/poppins_semibold</item>

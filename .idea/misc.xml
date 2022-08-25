@@ -11,6 +11,7 @@
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/drawable/ic_binar.xml" value="0.1395" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/drawable/ic_camera.xml" value="0.167" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1655" />
+        <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/drawable/round_corners.xml" value="0.1635" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/drawable/shape_round.xml" value="0.165" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/layout/activity_main1.xml" value="0.22447916666666667" />
@@ -18,6 +19,8 @@
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/layout/fragment_home.xml" value="0.22447916666666667" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/layout/fragment_splash.xml" value="0.22447916666666667" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/layout/item_movie.xml" value="0.22447916666666667" />
+        <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/layout/toast_notification.xml" value="0.22447916666666667" />
+        <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/layout/toast_notification_error.xml" value="0.22447916666666667" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1655" />
         <entry key="..\:/.DATA GUE/Kuliah/Intern/DOT Indonesia/OnBoardingIntern/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.151" />
       </map>
