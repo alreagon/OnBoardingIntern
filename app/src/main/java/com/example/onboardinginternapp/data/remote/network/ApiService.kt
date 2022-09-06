@@ -1,7 +1,7 @@
 package com.example.onboardinginternapp.data.remote.network
 
+import androidx.lifecycle.LiveData
 import com.example.onboardinginternapp.data.remote.model.Movie
-import com.example.onboardinginternapp.data.remote.model.MovieDetailResponse
 import com.example.onboardinginternapp.data.remote.model.MovieResponse
 import retrofit2.Call
 import retrofit2.Response
@@ -19,14 +19,15 @@ interface ApiService {
     //Get movies popular
     @GET("movie/popular")
     suspend fun getMovieBoundResource(
-        @QueryMap parameters: HashMap<String,String>
-    ): List<Movie>
+        @Query("api_key") apiKey: String
+    ): List<MovieResponse>
 
+    //TODO : nyobain buat response
     //Get detail movie detail id
-    @GET("movie/{movie_id}")
-    suspend fun getDetailMovePopularId(
-        @Path("movie_id") id : Int
-    ) : Response<MovieDetailResponse>
+//    @GET("movie/{movie_id}")
+//    suspend fun getDetailMovePopularId(
+//        @Path("movie_id") id: Int
+//    ): MovieDetailResponse
 
 }
 

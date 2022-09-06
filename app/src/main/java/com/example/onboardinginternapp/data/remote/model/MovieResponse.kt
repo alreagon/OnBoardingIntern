@@ -8,59 +8,88 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+@Entity(tableName = "moviesResponse")
 data class MovieResponse(
 
-    @field:SerializedName("page")
+    @PrimaryKey(autoGenerate = true)
+    @SerializedName("page")
     val page: Int,
 
-    @field:SerializedName("results")
+    @SerializedName("results")
     val results: List<Movie>,
 )
 
-@Entity(tableName = "movies")
-@Parcelize
+//@Entity(tableName = "movies")
 data class Movie(
 
-    @field:SerializedName("overview")
+    @SerializedName("overview")
     val overview: String,
 
-    @field:SerializedName("title")
+    @SerializedName("title")
     val title: String,
 
-    @field:SerializedName("poster_path")
+    @SerializedName("poster_path")
     val posterPath: String,
 
-    @field:SerializedName("backdrop_path")
+    @SerializedName("backdrop_path")
     val backdropPath: String,
 
-    @field:SerializedName("release_date")
+    @SerializedName("release_date")
     val releaseDate: String,
 
-    @field:SerializedName("popularity")
+    @SerializedName("popularity")
     val popularity: Double,
 
-    @field:SerializedName("vote_average")
+    @SerializedName("vote_average")
     val voteAverage: Double,
 
-    @PrimaryKey
-    @field:SerializedName("id")
+//    @PrimaryKey
+    @SerializedName("id")
     val id: Int,
 
-    @field:SerializedName("vote_count")
+    @SerializedName("vote_count")
     val voteCount: Int
-) : Parcelable
+)
 
-class MovieTypeConverter {
-    @TypeConverter
-    fun movieToString(moviee: Movie?) = Gson().toJson(moviee)
+//class MovieTypeConverter {
+//    @TypeConverter
+//    fun movieToString(moviee: Movie?) = Gson().toJson(moviee)
+//
+//    @TypeConverter
+//    fun stringToMovie(string : String) = Gson().fromJson(string, Array<Movie>::class.java).toList()
+//}
+//data class Movie(
+//
+//    @field:SerializedName("overview")
+//    val overview: String,
+//
+//    @field:SerializedName("title")
+//    val title: String,
+//
+//    @field:SerializedName("poster_path")
+//    val posterPath: String,
+//
+//    @field:SerializedName("backdrop_path")
+//    val backdropPath: String,
+//
+//    @field:SerializedName("release_date")
+//    val releaseDate: String,
+//
+//    @field:SerializedName("popularity")
+//    val popularity: Double,
+//
+//    @field:SerializedName("vote_average")
+//    val voteAverage: Double,
+//
+//    @PrimaryKey
+//    @field:SerializedName("id")
+//    val id: Int,
+//
+//    @field:SerializedName("vote_count")
+//    val voteCount: Int
+//) : Parcelable
 
-    @TypeConverter
-    fun stringToMovie(string : String) : Movie = Gson().fromJson(string, Movie::class.java)
 
-
-
-
-}
 
 
 

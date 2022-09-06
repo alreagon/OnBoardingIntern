@@ -15,6 +15,7 @@ import com.example.onboardinginternapp.R
 import com.example.onboardinginternapp.databinding.FragmentHomeBinding
 import com.example.onboardinginternapp.data.remote.model.Movie
 import com.example.onboardinginternapp.data.remote.model.MovieResponse
+import com.example.onboardinginternapp.utils.Resource
 import com.example.onboardinginternapp.utils.Status
 import com.example.onboardinginternapp.utils.errorToast
 import com.example.onboardinginternapp.view.adapter.HomeAdapter
@@ -52,8 +53,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setupRecycler() {
         homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Movie) {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(data.id))
+            override fun onItemClicked(data: MovieResponse) {
+//                Toast.makeText(this@HomeFragment,"pencet ke detail", Toast.LENGTH_SHORT).show()
+                homeViewModel._movie.postValue(
+                    Resource.error(
+                        "Kamu mencet detail",
+                        null
+                    )
+                )
+//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(data.id))
             }
         })
         recyclerView = binding.rvMovies

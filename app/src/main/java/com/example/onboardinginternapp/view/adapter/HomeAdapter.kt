@@ -18,7 +18,7 @@ import com.example.onboardinginternapp.data.remote.model.MovieResponse
 
 
 class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
-    private var list = ArrayList<Movie>()
+    private var list = ArrayList<MovieResponse>()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     companion object {
@@ -30,13 +30,13 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: Movie)
+        fun onItemClicked(data: MovieResponse)
     }
 
     class ViewHolder(var binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root)
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitData(data: List<Movie>) {
+    fun submitData(data: List<MovieResponse>) {
         list.clear()
         list.addAll(data)
         notifyDataSetChanged()
@@ -50,10 +50,18 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movieResponse = list[position]
-        val poster = posterBaseUrl + movieResponse.posterPath
-        val title = movieResponse.title
-        val releaseDate = movieResponse.releaseDate
-        val averageRating = movieResponse.voteAverage.toString()
+
+        val results = movieResponse.results
+
+        val poster = posterBaseUrl + results[0].posterPath
+        val title = results[0].title
+        val releaseDate = results[0].releaseDate
+        val averageRating = results[0].voteAverage.toString()
+
+//        val poster = posterBaseUrl + movieResponse.posterPath
+//        val title = movieResponse.title
+//        val releaseDate = movieResponse.releaseDate
+//        val averageRating = movieResponse.voteAverage.toString()
 
 
         holder.binding.apply {

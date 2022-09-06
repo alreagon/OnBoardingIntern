@@ -13,8 +13,9 @@ class HomeViewModel(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
-    private val _movie = MutableLiveData<Resource<List<Movie>>>() //CRUD
-    val movie: LiveData<Resource<List<Movie>>> = _movie // read aja, gk bisa ngapus gk bisa nambah
+    val _movie = MutableLiveData<Resource<List<MovieResponse>>>() //CRUD
+    val movie: LiveData<Resource<List<MovieResponse>>> =
+        _movie // read aja, gk bisa ngapus gk bisa nambah
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -35,8 +36,9 @@ class HomeViewModel(
             _movie.postValue(Resource.loading(null))
             if (networkHelper.isNetworkConnected()) {
                 try {
-                    val params = HashMap<String, String>()
-                    params["api_key"] = API_KEY
+                    val params = API_KEY
+//                    val params = HashMap<String, String>()
+//                    params["api_key"] = API_KEY
                     val response = remoteRepository.getMovieBoundResource(params)
                     _movie.postValue(Resource.success(response))
                 } catch (e: Exception) {

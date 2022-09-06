@@ -13,9 +13,10 @@ class MyApp : Application() {
             androidContext(this@MyApp)
             modules(
                 listOf(
-                    networkModule,
                     viewModelModule,
-                    localDbModule
+                    localDbModule,
+                    AppModule,
+                    repoModule
                 )
             )
         }
