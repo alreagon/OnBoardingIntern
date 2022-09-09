@@ -29,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModel()
     private var list = ArrayList<Movie>()
     private lateinit var recyclerView: RecyclerView
-    private var homeAdapter = HomeAdapter()
+//    private var homeAdapter = HomeAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,74 +43,74 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        homeViewModel.movie.observe(viewLifecycleOwner) { setMovieData(it) }
+        homeViewModel.movie.observe(viewLifecycleOwner) { setMovieData(it) }
         // ngamatin data, kalo ada update dia jalan
-        setupRecycler()
-        buttonCategoryAll()
+//        setupRecycler()
+//        buttonCategoryAll()
         homeViewModel.isLoading.observe(viewLifecycleOwner) { showLoading(it) }
 
     }
 
-    private fun setupRecycler() {
-        homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: MovieResponse) {
-//                Toast.makeText(this@HomeFragment,"pencet ke detail", Toast.LENGTH_SHORT).show()
-                homeViewModel._movie.postValue(
-                    Resource.error(
-                        "Kamu mencet detail",
-                        null
-                    )
-                )
-//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(data.id))
-            }
-        })
-        recyclerView = binding.rvMovies
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        recyclerView.adapter = homeAdapter
-        binding.progressBar.visibility = View.GONE
-    }
+//    private fun setupRecycler() {
+//        homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: MovieResponse) {
+////                Toast.makeText(this@HomeFragment,"pencet ke detail", Toast.LENGTH_SHORT).show()
+//                homeViewModel._movie.postValue(
+//                    Resource.error(
+//                        "Kamu mencet detail",
+//                        null
+//                    )
+//                )
+////                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(data.id))
+//            }
+//        })
+//        recyclerView = binding.rvMovies
+//        recyclerView.layoutManager = LinearLayoutManager(activity)
+//        recyclerView.adapter = homeAdapter
+//        binding.progressBar.visibility = View.GONE
+//    }
 
-    private fun buttonCategoryAll() {
-
-        homeViewModel.getMovie()
-        homeViewModel.movie.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    it.data?.let { listMovie ->
-                        list.clear()
-                        homeAdapter.submitData(listMovie.take(40))
-                    }
-                    binding.progressBar.visibility = View.GONE
-                }
-                Status.LOADING -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-                Status.ERROR -> {
-                    binding.progressBar.visibility = View.GONE
-                    Toast(requireContext()).errorToast(
-                        it.message.toString(),
-                        requireContext()
-                    )
-                }
-            }
-        }
-    }
-
-
-//    @SuppressLint("SetTextI18n")
-//    private fun setMovieData(movie: List<Movie>) {
-//        binding.apply {
-//            val homeAdapter = HomeAdapter(movie)
-//            rvMovies.setHasFixedSize(true)
-//            rvMovies.layoutManager = LinearLayoutManager(activity)
-//            rvMovies.adapter = homeAdapter
-//            homeAdapter.setOnItemClickCallback(object :
-//                HomeAdapter.OnItemClickCallback {
-//                override fun onItemClicked(data: Movie) {
-//                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(data))}
-//            })
+//    private fun buttonCategoryAll() {
+//
+//        homeViewModel.getMovie()
+//        homeViewModel.movie.observe(viewLifecycleOwner) {
+//            when (it.status) {
+//                Status.SUCCESS -> {
+//                    it.data?.let { listMovie ->
+//                        list.clear()
+//                        homeAdapter.submitData(listMovie.take(40))
+//                    }
+//                    binding.progressBar.visibility = View.GONE
+//                }
+//                Status.LOADING -> {
+//                    binding.progressBar.visibility = View.VISIBLE
+//                }
+//                Status.ERROR -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    Toast(requireContext()).errorToast(
+//                        it.message.toString(),
+//                        requireContext()
+//                    )
+//                }
+//            }
 //        }
 //    }
+
+
+    @SuppressLint("SetTextI18n")
+    private fun setMovieData(movie: List<Movie>) {
+        binding.apply {
+            val homeAdapter = HomeAdapter(movie)
+            rvMovies.setHasFixedSize(true)
+            rvMovies.layoutManager = LinearLayoutManager(activity)
+            rvMovies.adapter = homeAdapter
+            homeAdapter.setOnItemClickCallback(object :
+                HomeAdapter.OnItemClickCallback {
+                override fun onItemClicked(data: Movie) {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(data))}
+            })
+        }
+    }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE

@@ -25,18 +25,17 @@ interface LocalDao {
 
     //All movie
     @Query("SELECT * FROM movies")
-    fun getAllMovies(): List<MovieResponse>
+    fun getAllMovies(): List<Movie>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovie(moviess: List<MovieResponse>)
+    suspend fun insertMovie(moviess: Movie)
 
     @Query("DELETE FROM movies")
     suspend fun deleteAllMovies()
 
     @Transaction
-    suspend fun deleteAndInsertData(moviesss: List<MovieResponse>) {
+    suspend fun deleteAndInsertData(moviesss: List<Movie>) {
         deleteAllMovies()
-        insertMovie(moviesss)
     }
 
     //Detail movie

@@ -17,10 +17,10 @@ interface ApiService {
     ): Call<MovieResponse>
 
     //Get movies popular
-    @GET("movie/popular")
-    suspend fun getMovieBoundResource(
-        @Query("api_key") apiKey: String
-    ): List<MovieResponse>
+//    @GET("movie/popular")
+//    suspend fun getMovieBoundResource(
+//        @Query("api_key") apiKey: String
+//    ): List<MovieResponse>
 
     //TODO : nyobain buat response
     //Get detail movie detail id

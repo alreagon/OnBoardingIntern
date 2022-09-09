@@ -8,7 +8,8 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "moviesResponse")
+//@Entity(tableName = "movies")
+//@Entity(tableName = "moviesResponse")
 data class MovieResponse(
 
     @PrimaryKey(autoGenerate = true)
@@ -19,7 +20,8 @@ data class MovieResponse(
     val results: List<Movie>,
 )
 
-//@Entity(tableName = "movies")
+@Entity(tableName = "movies")
+@Parcelize
 data class Movie(
 
     @SerializedName("overview")
@@ -43,13 +45,13 @@ data class Movie(
     @SerializedName("vote_average")
     val voteAverage: Double,
 
-//    @PrimaryKey
+    @PrimaryKey
     @SerializedName("id")
     val id: Int,
 
     @SerializedName("vote_count")
     val voteCount: Int
-)
+) : Parcelable
 
 //class MovieTypeConverter {
 //    @TypeConverter

@@ -10,7 +10,16 @@ import retrofit2.Response
 class LocalDaoHelperImpl(private val localDao: LocalDao) {
 
     fun getAllMovies() = localDao.getAllMovies()
-    suspend fun deleteAndInsertData(moviess: List<MovieResponse>) = localDao.deleteAndInsertData(moviess)
+
+    suspend fun deleteAndInsertData(moviess: List<Movie>) {
+        localDao.deleteAllMovies()
+        moviess.forEach { movie ->
+            localDao.insertMovie(movie)
+        }
+    }
+
+
+//    suspend fun deleteAndInsertData(moviess: List<Movie>) = localDao.deleteAndInsertData(moviess)
 
 //    fun getDetailMovies() = localDao.getDetailMovies()
 //    suspend fun deleteAndInsertDataDetail(detailmoviess : MovieDetailResponse?) = localDao.deleteAndInsertDataDetail(detailmoviess)

@@ -14,9 +14,9 @@ class MyApp : Application() {
             modules(
                 listOf(
                     viewModelModule,
-                    localDbModule,
+//                    localDbModule,
                     AppModule,
-                    repoModule
+//                    repoModule
                 )
             )
         }
