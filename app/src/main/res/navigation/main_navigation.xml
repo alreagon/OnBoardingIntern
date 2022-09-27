@@ -27,8 +27,8 @@
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail">
         <argument
-            android:name="movie"
-            app:argType="com.example.onboardinginternapp.data.remote.model.Movie" />
+            android:name="idDetail"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment3"

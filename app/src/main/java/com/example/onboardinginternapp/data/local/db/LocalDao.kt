@@ -24,19 +24,19 @@ interface LocalDao {
 //    }
 
     //All movie
-    @Query("SELECT * FROM movies")
-    fun getAllMovies(): List<Movie>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovie(moviess: Movie)
-
-    @Query("DELETE FROM movies")
-    suspend fun deleteAllMovies()
-
-    @Transaction
-    suspend fun deleteAndInsertData(moviesss: List<Movie>) {
-        deleteAllMovies()
-    }
+//    @Query("SELECT * FROM movies")
+//    fun getAllMovies(): List<Movie>
+//
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    suspend fun insertMovie(moviess: Movie)
+//
+//    @Query("DELETE FROM movies")
+//    suspend fun deleteAllMovies()
+//
+//    @Transaction
+//    suspend fun deleteAndInsertData(moviesss: List<Movie>) {
+//        deleteAllMovies()
+//    }
 
     //Detail movie
 //    @Query("SELECT * FROM detailMovies")

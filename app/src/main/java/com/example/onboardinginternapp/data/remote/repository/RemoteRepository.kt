@@ -1,11 +1,26 @@
 package com.example.onboardinginternapp.data.remote.repository
 
-import androidx.lifecycle.LiveData
-import com.example.onboardinginternapp.data.local.db.LocalDaoHelperImpl
 import com.example.onboardinginternapp.data.remote.model.Movie
 import com.example.onboardinginternapp.data.remote.model.MovieResponse
+import com.example.onboardinginternapp.data.remote.network.ApiHelperImpl
+import com.example.onboardinginternapp.data.remote.network.ApiService
 import retrofit2.Call
-import retrofit2.Response
+
+
+//class RemoteRepository(
+//
+//    private val apiHelperImpl: ApiHelperImpl
+//) {
+//   suspend fun getMovieRemote(params : String): List<MovieResponse> {
+//        return apiHelperImpl.getMovieRemake(params)
+//    }
+//
+//}
+//class ApiHelperImpl(private val apiService: ApiService) {
+//
+//    suspend fun getMovieBoundResource(parameters: String) : List<MovieResponse> {
+//        return apiService.getMovieBoundResource(parameters)
+//    }
 
 //class RemoteRepository(
 //    private val apiHelperImpl: ApiHelperImpl,

@@ -3,7 +3,6 @@ package com.example.onboardinginternapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.onboardinginternapp.data.local.db.LocalDao
-import com.example.onboardinginternapp.data.local.db.LocalDaoHelperImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

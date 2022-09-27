@@ -11,10 +11,18 @@ import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface ApiService {
+
+
+    // Get movies popular remake
     @GET("movie/popular")
-    fun getMovie(
-        @Query("api_key") apiKey: String
-    ): Call<MovieResponse>
+    suspend fun getMovieRemake(
+        @QueryMap parameters: HashMap<String,String>
+    ): List<MovieResponse>
+
+//    @GET("movie/popular")
+//    fun getMovie(
+//        @Query("api_key") apiKey: String
+//    ): Call<MovieResponse>
 
     //Get movies popular
 //    @GET("movie/popular")

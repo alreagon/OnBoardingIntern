@@ -16,12 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnBoardingInternApp">
         <activity
-            android:name=".MainActivity1"
-            android:exported="false" />
-        <activity
             android:name=".view.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.OnBoardingInternApp">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

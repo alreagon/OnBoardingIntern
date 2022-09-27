@@ -38,10 +38,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showDetailMovie()
+//        showDetailMovie()
     }
-//
-//
+
+
 //    @SuppressLint("SetTextI18n")
 //    private fun showDetailMovie() {
 //        detailViewModel.DetailMovie(args.idDetailMovie)
@@ -120,22 +120,22 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 //    }
 
 
-    private fun showDetailMovie() {
-        binding.apply {
-            Glide.with(requireView())
-                .load(HomeAdapter.posterBaseUrl + args.movie.backdropPath)
-                .into(ivBackdrop)
-            Glide.with(requireView())
-                .load(HomeAdapter.posterBaseUrl + args.movie.posterPath)
-                .into(ivPoster)
-            tvTitle.text = args.movie.title
-            tvOverview.text = args.movie.overview
-            tvReleaseDate.text = args.movie.releaseDate
-            tvAverageRating.text = args.movie.voteAverage.toString()
-            tvRateCount.text = args.movie.voteCount.toString()
-            tvPopularity.text = args.movie.popularity.toString()
-        }
-    }
+//    private fun showDetailMovie() {
+//        binding.apply {
+//            Glide.with(requireView())
+//                .load(HomeAdapter.posterBaseUrl + args.movie.backdropPath)
+//                .into(ivBackdrop)
+//            Glide.with(requireView())
+//                .load(HomeAdapter.posterBaseUrl + args.movie.posterPath)
+//                .into(ivPoster)
+//            tvTitle.text = args.movie.title
+//            tvOverview.text = args.movie.overview
+//            tvReleaseDate.text = args.movie.releaseDate
+//            tvAverageRating.text = args.movie.voteAverage.toString()
+//            tvRateCount.text = args.movie.voteCount.toString()
+//            tvPopularity.text = args.movie.popularity.toString()
+//        }
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

@@ -2,9 +2,9 @@ package com.example.onboardinginternapp.di
 
 import android.content.Context
 import com.example.onboardinginternapp.BuildConfig
+import com.example.onboardinginternapp.data.remote.network.ApiHelperImpl
 import com.example.onboardinginternapp.data.remote.network.ApiService
 import com.example.onboardinginternapp.utils.NetworkHelper
-import com.example.onboardinginternapp.viewmodel.HomeViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -21,7 +21,22 @@ val AppModule = module {
     single { provideOkHttpClient() }
     single { provideRetrofit(get(),"https://api.themoviedb.org/3/") }
     single { provideApiService(get()) }
-//    single { ApiHelperImpl(get()) }
+    single { ApiHelperImpl(get()) }
+
+//    single {
+//        val loggingInterceptor =
+//            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+//        val client = OkHttpClient.Builder()
+//            .addInterceptor(loggingInterceptor)
+//            .build()
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://api.themoviedb.org/3/")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .client(client)
+//            .build()
+//        retrofit.create(ApiService::class.java)
+//    }}
+
 }
 
 

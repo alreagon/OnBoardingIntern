@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.onboardinginternapp.R
 import com.example.onboardinginternapp.databinding.FragmentHomeBinding
 import com.example.onboardinginternapp.data.remote.model.Movie
@@ -29,7 +28,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModel()
     private var list = ArrayList<Movie>()
     private lateinit var recyclerView: RecyclerView
-//    private var homeAdapter = HomeAdapter()
+    private var homeAdapter = HomeAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,13 +42,69 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel.movie.observe(viewLifecycleOwner) { setMovieData(it) }
+//        homeViewModel.movie.observe(viewLifecycleOwner) { setMovieData(it) }
         // ngamatin data, kalo ada update dia jalan
 //        setupRecycler()
 //        buttonCategoryAll()
+//        setMovieData()
+        setupRecyclerr()
+        setupMovie()
         homeViewModel.isLoading.observe(viewLifecycleOwner) { showLoading(it) }
 
     }
+
+    private fun setupRecyclerr(){
+
+        homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: Movie) {
+//                homeViewModel._movie.postValue(
+//                    Resource.error(
+//                        "Kamu mencet detail",
+//                        null
+//                    )
+//                )
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+                    idDetail = data.id
+                ))
+            }
+        })
+        recyclerView = binding.rvMovies
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.adapter = homeAdapter
+        binding.progressBar.visibility = View.GONE
+
+    }
+    private fun setupMovie(){
+
+
+        homeViewModel.getMovieViewModel()
+        homeViewModel.movie.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let { listMovie ->
+//                        list.clear()
+                        homeAdapter.submitData(listMovie)
+                    }
+                    binding.progressBar.visibility = View.GONE
+                }
+                Status.LOADING -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                Status.ERROR -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast(requireContext()).errorToast(
+                        it.message.toString(),
+                        requireContext()
+                    )
+                }
+            }
+        }
+
+
+    }
+
+
 
 //    private fun setupRecycler() {
 //        homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
@@ -96,21 +151,27 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 //        }
 //    }
 
-
-    @SuppressLint("SetTextI18n")
-    private fun setMovieData(movie: List<Movie>) {
-        binding.apply {
-            val homeAdapter = HomeAdapter(movie)
-            rvMovies.setHasFixedSize(true)
-            rvMovies.layoutManager = LinearLayoutManager(activity)
-            rvMovies.adapter = homeAdapter
-            homeAdapter.setOnItemClickCallback(object :
-                HomeAdapter.OnItemClickCallback {
-                override fun onItemClicked(data: Movie) {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(data))}
-            })
-        }
-    }
+//
+//    @SuppressLint("SetTextI18n")
+//    private fun setMovieData(
+////        movie: List<Movie>
+//    ) {
+//
+//        homeViewModel.fetchData()
+//        homeViewModel.movie.observe(viewLifecycleOwner) {
+//        binding.apply {
+//            val homeAdapter = HomeAdapter(it)
+//            rvMovies.setHasFixedSize(true)
+//            rvMovies.layoutManager = LinearLayoutManager(activity)
+//            rvMovies.adapter = homeAdapter
+//            homeAdapter.setOnItemClickCallback(object :
+//                HomeAdapter.OnItemClickCallback {
+//                override fun onItemClicked(data: Movie) {
+//                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(data))}
+//            })
+//        }
+//        }
+//    }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
