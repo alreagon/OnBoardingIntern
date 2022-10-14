@@ -1,0 +1,434 @@
+Index: app/src/main/java/com/example/onboardinginternapp/di/MyApp.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/di/MyApp.kt b/app/src/main/java/com/example/onboardinginternapp/di/MyApp.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/di/MyApp.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/di/MyApp.kt	(date 1664360309271)
+@@ -16,7 +16,7 @@
+                     viewModelModule,
+ //                    localDbModule,
+                     AppModule,
+-//                    repoModule
++                    repoModule
+                 )
+             )
+         }
+Index: app/src/main/java/com/example/onboardinginternapp/view/fragment/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/view/fragment/HomeFragment.kt b/app/src/main/java/com/example/onboardinginternapp/view/fragment/HomeFragment.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/view/fragment/HomeFragment.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/view/fragment/HomeFragment.kt	(date 1664440029363)
+@@ -2,6 +2,7 @@
+ 
+ import android.annotation.SuppressLint
+ import android.os.Bundle
++import android.util.Log
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+@@ -23,6 +24,10 @@
+ 
+ class HomeFragment : Fragment(R.layout.fragment_home) {
+ 
++    companion object {
++        const val API_KEY = "1c9c88a7ed857e63d5aaab264c8d0169"
++    }
++
+     private var _binding: FragmentHomeBinding? = null
+     private val binding get() = _binding!!
+     private val homeViewModel: HomeViewModel by viewModel()
+@@ -47,51 +52,35 @@
+ //        setupRecycler()
+ //        buttonCategoryAll()
+ //        setMovieData()
+-        setupRecyclerr()
+-        setupMovie()
++//        setupRecyclerr()
++//        setupMovie()
+         homeViewModel.isLoading.observe(viewLifecycleOwner) { showLoading(it) }
+ 
+     }
+ 
+-    private fun setupRecyclerr(){
+-
+-        homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
+-            override fun onItemClicked(data: Movie) {
+-//                homeViewModel._movie.postValue(
+-//                    Resource.error(
+-//                        "Kamu mencet detail",
+-//                        null
+-//                    )
+-//                )
+-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+-                    idDetail = data.id
+-                ))
+-            }
+-        })
+-        recyclerView = binding.rvMovies
+-        recyclerView.setHasFixedSize(true)
+-        recyclerView.layoutManager = LinearLayoutManager(activity)
+-        recyclerView.adapter = homeAdapter
+-        binding.progressBar.visibility = View.GONE
+-
+-    }
+-    private fun setupMovie(){
+-
+-
+-        homeViewModel.getMovieViewModel()
+-        homeViewModel.movie.observe(viewLifecycleOwner) {
++    private fun initViewModel() {
++        val listMovie = homeViewModel.getMoviess(API_KEY)
++        listMovie.observe(this) {
+             when (it.status) {
+                 Status.SUCCESS -> {
+-                    it.data?.let { listMovie ->
+-//                        list.clear()
+-                        homeAdapter.submitData(listMovie)
++                    Log.e("Setup Movie", "setupMovie")
++
++                    val movies = it.data?.results
++                    if (movies != null) {
++                        homeAdapter.submitData(movies)
+                     }
++//                    it.data?.let { listMovie ->
++////                        list.clear()
++//                        homeAdapter.submitData(listMovie)
++//                    }
+                     binding.progressBar.visibility = View.GONE
+                 }
+                 Status.LOADING -> {
+                     binding.progressBar.visibility = View.VISIBLE
+                 }
+                 Status.ERROR -> {
++
++                    Log.e("SetupMovieError", "setupMovieErrorr")
+                     binding.progressBar.visibility = View.GONE
+                     Toast(requireContext()).errorToast(
+                         it.message.toString(),
+@@ -99,11 +88,61 @@
+                     )
+                 }
+             }
+-        }
+ 
+-
++        }
+     }
+ 
++//    private fun setupRecyclerr(){
++//        homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
++//            override fun onItemClicked(data: Movie) {
++////                homeViewModel._movie.postValue(
++////                    Resource.error(
++////                        "Kamu mencet detail",
++////                        null
++////                    )
++////                )
++//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(
++//                    idDetail = data.id
++//                ))
++//            }
++//        })
++//        recyclerView = binding.rvMovies
++//        recyclerView.setHasFixedSize(true)
++//        recyclerView.layoutManager = LinearLayoutManager(activity)
++//        recyclerView.adapter = homeAdapter
++//        binding.progressBar.visibility = View.GONE
++//
++//    }
++//    private fun setupMovie(){
++//        homeViewModel.getMovieViewModel()
++//        homeViewModel.movie.observe(viewLifecycleOwner) {
++//            when (it.status) {
++//                Status.SUCCESS -> {
++//                    Log.e("Setup Movie", "setupMovie")
++//
++//                    it.data?.let { listMovie ->
++////                        list.clear()
++//                        homeAdapter.submitData(listMovie)
++//                    }
++//                    binding.progressBar.visibility = View.GONE
++//                }
++//                Status.LOADING -> {
++//                    binding.progressBar.visibility = View.VISIBLE
++//                }
++//                Status.ERROR -> {
++//
++//                    Log.e("SetupMovieError", "setupMovieErrorr")
++//                    binding.progressBar.visibility = View.GONE
++//                    Toast(requireContext()).errorToast(
++//                        it.message.toString(),
++//                        requireContext()
++//                    )
++//                }
++//            }
++//        }
++//
++//
++//    }
+ 
+ 
+ //    private fun setupRecycler() {
+Index: app/src/main/java/com/example/onboardinginternapp/view/adapter/HomeAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/view/adapter/HomeAdapter.kt b/app/src/main/java/com/example/onboardinginternapp/view/adapter/HomeAdapter.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/view/adapter/HomeAdapter.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/view/adapter/HomeAdapter.kt	(date 1664440029348)
+@@ -36,7 +36,7 @@
+ 
+     @SuppressLint("NotifyDataSetChanged")
+     fun submitData(data: List<Movie>) {
+-        list.clear()
++//        list.clear()
+         list.addAll(data)
+         notifyDataSetChanged()
+     }
+Index: app/src/main/java/com/example/onboardinginternapp/di/RepositoryModule.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/di/RepositoryModule.kt b/app/src/main/java/com/example/onboardinginternapp/di/RepositoryModule.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/di/RepositoryModule.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/di/RepositoryModule.kt	(date 1664360309350)
+@@ -1,9 +1,10 @@
+ package com.example.onboardinginternapp.di
+ 
++import com.example.onboardinginternapp.data.remote.repository.RemoteRepository
+ import org.koin.dsl.module
+ 
+-//val repoModule = module {
+-//    single { RemoteRepository(get(),
+-////        get()
+-//    ) }
+-//}
+\ No newline at end of file
++val repoModule = module {
++    single { RemoteRepository(get(),
++//        get()
++    ) }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/example/onboardinginternapp/di/ViewModelModule.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/di/ViewModelModule.kt b/app/src/main/java/com/example/onboardinginternapp/di/ViewModelModule.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/di/ViewModelModule.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/di/ViewModelModule.kt	(date 1664440372252)
+@@ -5,5 +5,5 @@
+ import org.koin.dsl.module
+ 
+ val viewModelModule = module {
+-    viewModel { HomeViewModel(get(),get()) }
++    viewModel { HomeViewModel(get()) }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/example/onboardinginternapp/viewmodel/HomeViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/viewmodel/HomeViewModel.kt b/app/src/main/java/com/example/onboardinginternapp/viewmodel/HomeViewModel.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/viewmodel/HomeViewModel.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/viewmodel/HomeViewModel.kt	(date 1664440747618)
+@@ -8,6 +8,7 @@
+ import com.example.onboardinginternapp.data.remote.model.MovieResponse
+ import com.example.onboardinginternapp.data.remote.network.ApiHelperImpl
+ import com.example.onboardinginternapp.data.remote.network.ApiService
++import com.example.onboardinginternapp.data.remote.repository.RemoteRepository
+ import com.example.onboardinginternapp.utils.NetworkHelper
+ import com.example.onboardinginternapp.utils.Resource
+ import kotlinx.coroutines.flow.flow
+@@ -18,6 +19,7 @@
+ class HomeViewModel(
+     private val ApiHelperImpl: ApiHelperImpl,
+     private val networkHelper: NetworkHelper
++//private val remoteRepository: RemoteRepository
+ ) : ViewModel() {
+ 
+     private val _movie = MutableLiveData<Resource<List<Movie>>>() //CRUD
+@@ -40,6 +42,13 @@
+ //        getMovie()
+     }
+ 
++//    fun getMoviess(params : String): LiveData<Resource<MovieResponse>> {
++//        return liveData {
++//            _movie.postValue(Resource.loading(null))
++//            emit(remoteRepository.getMovieRemote(params))
++//        }
++//    }
++
+ 
+     fun getMovieViewModel() {
+ 
+@@ -49,14 +58,19 @@
+ 
+                 try {
+ 
++                    Log.e("HomeViewModel", "HomeViewModel")
+                     val params = HashMap<String, String>()
+                     params["api_key"] = API_KEY
+-                    val response = ApiHelperImpl.getMovieRemake(params)
++
++
++                    val response = ApiHelperImpl.getMovieRemake(API_KEY)
+                     val moviee = response[0].results
+                     _movie.postValue(Resource.success(moviee))
+ 
+                 }
+                 catch (e: Exception) {
++
++                    Log.e("HomeViewModelExeption", "HomeViewModelExeption")
+                     _movie.postValue(
+                         Resource.error(
+                             "failed to get data from server",
+Index: app/src/main/java/com/example/onboardinginternapp/data/remote/repository/RemoteRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/data/remote/repository/RemoteRepository.kt b/app/src/main/java/com/example/onboardinginternapp/data/remote/repository/RemoteRepository.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/data/remote/repository/RemoteRepository.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/data/remote/repository/RemoteRepository.kt	(date 1664440372264)
+@@ -4,18 +4,19 @@
+ import com.example.onboardinginternapp.data.remote.model.MovieResponse
+ import com.example.onboardinginternapp.data.remote.network.ApiHelperImpl
+ import com.example.onboardinginternapp.data.remote.network.ApiService
++import com.example.onboardinginternapp.utils.Resource
+ import retrofit2.Call
+ 
+ 
+-//class RemoteRepository(
+-//
+-//    private val apiHelperImpl: ApiHelperImpl
+-//) {
+-//   suspend fun getMovieRemote(params : String): List<MovieResponse> {
+-//        return apiHelperImpl.getMovieRemake(params)
+-//    }
+-//
+-//}
++class RemoteRepository(
++    private val apiHelperImpl: ApiHelperImpl
++) {
++   suspend fun getMovieRemote(params : String) : Resource<MovieResponse> {
++        val movieResponse = apiHelperImpl.getMovieRemake(params)
++       return Resource.success(movieResponse)
++    }
++
++}
+ //class ApiHelperImpl(private val apiService: ApiService) {
+ //
+ //    suspend fun getMovieBoundResource(parameters: String) : List<MovieResponse> {
+Index: app/src/main/java/com/example/onboardinginternapp/data/local/db/Converters.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/data/local/db/Converters.kt b/app/src/main/java/com/example/onboardinginternapp/data/local/db/Converters.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/data/local/db/Converters.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/data/local/db/Converters.kt	(date 1664276078269)
+@@ -30,7 +30,9 @@
+         val json = JSONObject(movie)
+         return MovieResponse(
+             json.getInt("page"),
+-            json.get("result") as List<Movie>
++            json.get("result") as List<Movie>,
++            json.getInt("total_result"),
++            json.getInt("total_pages")
+         )
+     }
+ 
+Index: app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiService.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiService.kt b/app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiService.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiService.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiService.kt	(date 1664360098669)
+@@ -15,9 +15,9 @@
+ 
+     // Get movies popular remake
+     @GET("movie/popular")
+-    suspend fun getMovieRemake(
+-        @QueryMap parameters: HashMap<String,String>
+-    ): List<MovieResponse>
++     fun getMovieRemake(
++        @Query("api_key") apikey :String
++    ): MovieResponse
+ 
+ //    @GET("movie/popular")
+ //    fun getMovie(
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/.idea/misc.xml	(date 1664761576376)
+@@ -26,7 +26,7 @@
+       </map>
+     </option>
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_16" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_X" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+Index: app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiHelperImpl.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiHelperImpl.kt b/app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiHelperImpl.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiHelperImpl.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/data/remote/network/ApiHelperImpl.kt	(date 1664360098606)
+@@ -1,11 +1,13 @@
+ package com.example.onboardinginternapp.data.remote.network
+ 
++import android.util.Log
+ import com.example.onboardinginternapp.data.remote.model.MovieResponse
+ 
+ 
+ class ApiHelperImpl(private val apiService: ApiService) {
+ 
+-    suspend fun getMovieRemake(prams : HashMap<String, String>):List<MovieResponse>{
++     fun getMovieRemake(prams : String): MovieResponse {
++         Log.e("ApiHelperImpl", "ApiHelperImpl")
+         return apiService.getMovieRemake(prams)
+     }
+ //    suspend fun getMovieBoundResource(parameters: String) : List<MovieResponse> {
+Index: app/src/main/java/com/example/onboardinginternapp/data/remote/model/MovieResponse.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/onboardinginternapp/data/remote/model/MovieResponse.kt b/app/src/main/java/com/example/onboardinginternapp/data/remote/model/MovieResponse.kt
+--- a/app/src/main/java/com/example/onboardinginternapp/data/remote/model/MovieResponse.kt	(revision 4d6e57b7f3b8fbb101cc7c163c8541ebeb29f302)
++++ b/app/src/main/java/com/example/onboardinginternapp/data/remote/model/MovieResponse.kt	(date 1664355474231)
+@@ -18,7 +18,13 @@
+     val page: Int,
+ 
+     @field:SerializedName("results")
+-    val results: List<Movie>,
++    val results: List<Movie>? = null,
++
++    @field:SerializedName("total_result")
++    val total_result: Int,
++
++    @field:SerializedName("total_pages")
++    val total_pages : Int
+ )
+ 
+ //@Entity(tableName = "movies")
