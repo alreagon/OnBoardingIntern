@@ -17,12 +17,12 @@ import retrofit2.Response
 //            localDao.insertMovie(movie)
 //        }
 //    }
-
-
+//
+//
 //    suspend fun deleteAndInsertData(moviess: List<Movie>) = localDao.deleteAndInsertData(moviess)
-
+//
 //    fun getDetailMovies() = localDao.getDetailMovies()
 //    suspend fun deleteAndInsertDataDetail(detailmoviess : MovieDetailResponse?) = localDao.deleteAndInsertDataDetail(detailmoviess)
-
-
+//
+//
 //}

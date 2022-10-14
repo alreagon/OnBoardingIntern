@@ -8,6 +8,26 @@ import org.json.JSONObject
 
 class Converters {
 
+    @TypeConverter
+    fun listToString(values: List<Int>): String {
+        val strList = mutableListOf<String>()
+        values.forEach {
+            strList.add(it.toString())
+        }
+        return strList.joinToString(",")
+    }
+
+    @TypeConverter
+    fun stringToList(value: String): List<Int> {
+        val intList = mutableListOf<Int>()
+        value.split(",").forEach {
+            intList.add(it.toInt())
+        }
+        return intList
+    }
+
+}
+
 
 //    @TypeConverter
 //    fun listToJson(value: List<Movie>?) = Gson().toJson(value)
@@ -17,55 +37,55 @@ class Converters {
 
 
     // movie response
-    @TypeConverter
-    fun fromMovieResponse(movieResponse: MovieResponse): String {
-        return JSONObject().apply {
-            put("page", movieResponse.page)
-            put("result", movieResponse.results)
-        }.toString()
-    }
-
-    @TypeConverter
-    fun toMovieResponse(movie: String): MovieResponse {
-        val json = JSONObject(movie)
-        return MovieResponse(
-            json.getInt("page"),
-            json.get("result") as List<Movie>
-        )
-    }
-
-
-    // movie
-    @TypeConverter
-    fun fromMovie(movie: Movie): String {
-        return JSONObject().apply {
-            put("overview", movie.overview)
-            put("title", movie.title)
-            put("poster_path", movie.posterPath)
-            put("backdrop_path", movie.backdropPath)
-            put("release_date", movie.releaseDate)
-            put("popularity", movie.popularity)
-            put("vote_average", movie.voteAverage)
-            put("id", movie.id)
-            put("vote_count", movie.voteCount)
-        }.toString()
-    }
-
-    @TypeConverter
-    fun toMovie(movie: String): Movie {
-        val json = JSONObject(movie)
-        return Movie(
-            json.getString("overview"),
-            json.getString("title"),
-            json.getString("poster_path"),
-            json.getString("backdrop_path"),
-            json.getString("release_date"),
-            json.getDouble("popularity"),
-            json.getDouble("vote_average"),
-            json.getInt("vote_count"),
-            json.getInt("id"),
-            )
-    }
+//    @TypeConverter
+//    fun fromMovieResponse(movieResponse: MovieResponse): String {
+//        return JSONObject().apply {
+//            put("page", movieResponse.page)
+//            put("result", movieResponse.results)
+//        }.toString()
+//    }
+//
+//    @TypeConverter
+//    fun toMovieResponse(movie: String): MovieResponse {
+//        val json = JSONObject(movie)
+//        return MovieResponse(
+//            json.getInt("page"),
+//            json.get("result") as List<Movie>
+//        )
+//    }
+//
+//
+//    // movie
+//    @TypeConverter
+//    fun fromMovie(movie: Movie): String {
+//        return JSONObject().apply {
+//            put("overview", movie.overview)
+//            put("title", movie.title)
+//            put("poster_path", movie.posterPath)
+//            put("backdrop_path", movie.backdropPath)
+//            put("release_date", movie.releaseDate)
+//            put("popularity", movie.popularity)
+//            put("vote_average", movie.voteAverage)
+//            put("id", movie.id)
+//            put("vote_count", movie.voteCount)
+//        }.toString()
+//    }
+//
+//    @TypeConverter
+//    fun toMovie(movie: String): Movie {
+//        val json = JSONObject(movie)
+//        return Movie(
+//            json.getString("overview"),
+//            json.getString("title"),
+//            json.getString("poster_path"),
+//            json.getString("backdrop_path"),
+//            json.getString("release_date"),
+//            json.getDouble("popularity"),
+//            json.getDouble("vote_average"),
+//            json.getInt("vote_count"),
+//            json.getInt("id"),
+//            )
+//    }
 
     // movie detail genre
 //    @TypeConverter
@@ -168,4 +188,4 @@ class Converters {
 //        val type = object : TypeToken<List<String>>(){}.type
 //        return Gson().fromJson(countryJson, type)
 //    }
-}
+//}

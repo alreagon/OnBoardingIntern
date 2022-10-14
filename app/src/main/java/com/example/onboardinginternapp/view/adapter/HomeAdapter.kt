@@ -96,6 +96,86 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
 }
 
+//class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+//    private var list = ArrayList<Movie>()
+//    private lateinit var onItemClickCallback: OnItemClickCallback
+//
+//    companion object {
+//        const val posterBaseUrl = "https://image.tmdb.org/t/p/w500"
+//    }
+//
+//    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+//        this.onItemClickCallback = onItemClickCallback
+//    }
+//
+//    interface OnItemClickCallback {
+//        fun onItemClicked(data: Movie)
+//    }
+//
+//    class ViewHolder(var binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root)
+//
+//    @SuppressLint("NotifyDataSetChanged")
+//    fun submitData(data: List<Movie>) {
+//        list.clear()
+//        list.addAll(data)
+//        notifyDataSetChanged()
+//    }
+//
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+//        val binding =
+//            ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+//        return ViewHolder(binding)
+//    }
+//
+//    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+//        val movieResponse = list[position]
+//
+//
+//        val poster = posterBaseUrl + movieResponse.posterPath
+//        val title = movieResponse.title
+//        val releaseDate = movieResponse.releaseDate
+//        val averageRating = movieResponse.voteAverage.toString()
+//
+//
+//        holder.binding.apply {
+//            Glide.with(holder.itemView.context)
+//                .load(poster)
+//                .listener(object : RequestListener<Drawable> {
+//                    override fun onLoadFailed(
+//                        e: GlideException?,
+//                        model: Any?,
+//                        target: Target<Drawable>?,
+//                        isFirstResource: Boolean
+//                    ): Boolean {
+//                        holder.binding.ivPoster.setImageResource(R.drawable.netflixlogo)
+//                        return true
+//                    }
+//
+//                    override fun onResourceReady(
+//                        resource: Drawable?,
+//                        model: Any?,
+//                        target: Target<Drawable>?,
+//                        dataSource: DataSource?,
+//                        isFirstResource: Boolean
+//                    ): Boolean {
+//                        return false
+//                    }
+//                })
+//                .into(holder.binding.ivPoster)
+//            tvTitle.text = title
+//            tvReleaseDate.text = releaseDate
+//            tvAverageRating.text = averageRating
+//            ivCard.setOnClickListener {
+//                onItemClickCallback.onItemClicked(movieResponse)
+//            }
+//
+//        }
+//    }
+//
+//    override fun getItemCount() = list.size
+//
+//}
+
 
 //class HomeAdapter(private val listMovie: List<Movie>) :
 //    RecyclerView.Adapter<HomeAdapter.ViewHolder>() {

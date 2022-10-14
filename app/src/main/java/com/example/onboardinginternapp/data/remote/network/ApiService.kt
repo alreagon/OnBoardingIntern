@@ -16,8 +16,7 @@ interface ApiService {
     // Get movies popular remake
     @GET("movie/popular")
     suspend fun getMovieRemake(
-        @QueryMap parameters: HashMap<String,String>
-    ): List<MovieResponse>
+    ): Response<MovieResponse>
 
 //    @GET("movie/popular")
 //    fun getMovie(

@@ -7,36 +7,26 @@ import com.example.onboardinginternapp.data.remote.model.MovieResponse
 @Dao
 interface LocalDao {
 
-//    //All movie Response
-//    @Query("SELECT * FROM moviesResponse")
-//    fun getAllMoviesResponse(): List<MovieResponse>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertMovieResponse(moviesResponse: MovieResponse)
-//
-//    @Query("DELETE FROM moviesResponse")
-//    suspend fun deleteAllMoviesResponse()
-//
-//    @Transaction
-//    suspend fun deleteAndInsertData(moviesResponse: MovieResponse) {
-//        deleteAllMoviesResponse()
-//        insertMovieResponse(moviesResponse)
-//    }
+    @Query("SELECT * FROM movies order by popularity DESC")
+    fun getAllMovies(): List<Movie>?
 
-    //All movie
-//    @Query("SELECT * FROM movies")
-//    fun getAllMovies(): List<Movie>
-//
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertMovie(moviess: Movie)
-//
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovie(moviess: List<Movie>)
+
+    @Delete
+    fun delete(movie: Movie)
+
+    @Delete
+    fun deleteAll(movie: List<Movie>)
+
 //    @Query("DELETE FROM movies")
 //    suspend fun deleteAllMovies()
 //
 //    @Transaction
 //    suspend fun deleteAndInsertData(moviesss: List<Movie>) {
 //        deleteAllMovies()
-//    }
+//}
+    }
 
     //Detail movie
 //    @Query("SELECT * FROM detailMovies")
@@ -54,4 +44,3 @@ interface LocalDao {
 //        insertDetailMovie(detailmoviess)
 //    }
 
-}

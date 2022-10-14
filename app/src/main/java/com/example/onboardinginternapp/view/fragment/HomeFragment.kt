@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onboardinginternapp.R
@@ -19,6 +20,7 @@ import com.example.onboardinginternapp.utils.Status
 import com.example.onboardinginternapp.utils.errorToast
 import com.example.onboardinginternapp.view.adapter.HomeAdapter
 import com.example.onboardinginternapp.viewmodel.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -47,62 +49,117 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 //        setupRecycler()
 //        buttonCategoryAll()
 //        setMovieData()
-        setupRecyclerr()
-        setupMovie()
+//        setupRecyclerr()
+//        setupMovie()
         homeViewModel.isLoading.observe(viewLifecycleOwner) { showLoading(it) }
 
+        init()
+        subscribeUi()
     }
 
-    private fun setupRecyclerr(){
+    private fun init() {
 
-        homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: Movie) {
-//                homeViewModel._movie.postValue(
-//                    Resource.error(
-//                        "Kamu mencet detail",
-//                        null
-//                    )
-//                )
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(
-                    idDetail = data.id
-                ))
-            }
-        })
         recyclerView = binding.rvMovies
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(activity)
         recyclerView.adapter = homeAdapter
         binding.progressBar.visibility = View.GONE
 
+//        title = "Trending Movies"
+//        val layoutManager = LinearLayoutManager(this)
+//        recyclerView.layoutManager = layoutManager
+//
+//        val dividerItemDecoration = DividerItemDecoration(
+//            recyclerView.context,
+//            layoutManager.orientation
+//        )
+//
+//        recyclerView.addItemDecoration(dividerItemDecoration)
+//        homeAdapter = HomeAdapter()
+//        recyclerView.adapter = homeAdapter
+//        binding.progressBar.visibility = View.GONE
     }
-    private fun setupMovie(){
 
+    private fun subscribeUi() {
+        homeViewModel.movie.observe(viewLifecycleOwner) { result ->
 
-        homeViewModel.getMovieViewModel()
-        homeViewModel.movie.observe(viewLifecycleOwner) {
-            when (it.status) {
+            when (result.status) {
                 Status.SUCCESS -> {
-                    it.data?.let { listMovie ->
-//                        list.clear()
-                        homeAdapter.submitData(listMovie)
+                    result.data?.results?.let { list ->
+                        homeAdapter.submitData(list)
                     }
                     binding.progressBar.visibility = View.GONE
                 }
+
+                Status.ERROR -> {
+                    result.message?.let {
+                        showError(it)
+                    }
+                    binding.progressBar.visibility = View.GONE
+                }
+
                 Status.LOADING -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
-                Status.ERROR -> {
-                    binding.progressBar.visibility = View.GONE
-                    Toast(requireContext()).errorToast(
-                        it.message.toString(),
-                        requireContext()
-                    )
-                }
             }
+
         }
-
-
     }
+
+    private fun showError(msg: String) {
+        Snackbar.make(binding.vParent, msg, Snackbar.LENGTH_INDEFINITE).setAction("DISMISS") {
+        }.show()
+    }
+//    private fun setupRecyclerr(){
+//
+//        homeAdapter.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
+//            override fun onItemClicked(data: Movie) {
+////                homeViewModel._movie.postValue(
+////                    Resource.error(
+////                        "Kamu mencet detail",
+////                        null
+////                    )
+////                )
+//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDetailFragment(
+//                    idDetail = data.id
+//                ))
+//            }
+//        })
+//        recyclerView = binding.rvMovies
+//        recyclerView.setHasFixedSize(true)
+//        recyclerView.layoutManager = LinearLayoutManager(activity)
+//        recyclerView.adapter = homeAdapter
+//        binding.progressBar.visibility = View.GONE
+//
+//    }
+//    private fun setupMovie(){
+//
+//
+//        homeViewModel.getMovieViewModel()
+//        homeViewModel.movie.observe(viewLifecycleOwner) {
+//            when (it.status) {
+//                Status.SUCCESS -> {
+//                    it.data?.let { listMovie ->
+////                        list.clear()
+//                        homeAdapter.submitData(listMovie)
+//                    }
+//                    binding.progressBar.visibility = View.GONE
+//                }
+//                Status.LOADING -> {
+//                    binding.progressBar.visibility = View.VISIBLE
+//                }
+//                Status.ERROR -> {
+//                    binding.progressBar.visibility = View.GONE
+//                    Toast(requireContext()).errorToast(
+//                        it.message.toString(),
+//                        requireContext()
+//                    )
+//                }
+//            }
+//        }
+//
+//
+//    }
 
 
 
